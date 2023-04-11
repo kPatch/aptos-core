@@ -1,0 +1,98 @@
+// Copyright © Aptos Foundation
+// SPDX-License-Identifier: Apache-2.0
+
+use crate::{
+    pruner::{
+        pruner_utils::get_or_initialize_subpruner_progress,
+        state_store::{generics::StaleNodeIndexSchemaTrait, StateMerklePruner},
+    },
+    schema::{
+        db_metadata::{DbMetadataSchema, DbMetadataValue},
+        jellyfish_merkle_node::JellyfishMerkleNodeSchema,
+    },
+};
+use anyhow::Result;
+use aptos_jellyfish_merkle::StaleNodeIndex;
+use aptos_schemadb::{schema::KeyCodec, SchemaBatch, DB};
+use aptos_types::transaction::Version;
+use std::{marker::PhantomData, sync::Arc};
+
+pub(in crate::pruner) struct StateMerkleShardPruner<S> {
+    shard_id: u8,
+    db_shard: Arc<DB>,
+    _phantom: PhantomData<S>,
+}
+
+impl<S: StaleNodeIndexSchemaTrait> StateMerkleShardPruner<S>
+where
+    StaleNodeIndex: KeyCodec<S>,
+{
+    pub(in crate::pruner) fn new(
+        shard_id: u8,
+        db_shard: Arc<DB>,
+        metadata_progress: Version,
+    ) -> Result<Self> {
+        let progress = get_or_initialize_subpruner_progress(
+            &db_shard,
+            &S::tag(Some(shard_id)),
+            metadata_progress,
+        )?;
+        let myself = Self {
+            shard_id,
+            db_shard,
+            _phantom: PhantomData,
+        };
+
+        myself.prune(progress, metadata_progress, usize::max_value())?;
+
+        Ok(myself)
+    }
+
+    pub(in crate::pruner) fn prune(
+        &self,
+        current_progress: Version,
+        target_version: Version,
+        batch_size: usize,
+    ) -> Result<()> {
+        loop {
+            let batch = SchemaBatch::new();
+            let (indices, next_version) = StateMerklePruner::get_stale_node_indices(
+                &self.db_shard,
+                current_progress,
+                target_version,
+                batch_size,
+            )?;
+
+            indices.into_iter().try_for_each(|index| {
+                batch.delete::<JellyfishMerkleNodeSchema>(&index.node_key)?;
+                batch.delete::<S>(&index)
+            })?;
+
+            let mut done = true;
+            if let Some(next_version) = next_version {
+                if next_version <= target_version {
+                    done = false;
+                }
+            }
+
+            if done {
+                batch.put::<DbMetadataSchema>(
+                    &S::tag(Some(self.shard_id)),
+                    &DbMetadataValue::Version(target_version),
+                )?;
+            }
+
+            self.db_shard.write_schemas(batch)?;
+
+            if done {
+                break;
+            }
+        }
+
+        Ok(())
+    }
+
+    pub(in crate::pruner) fn shard_id(&self) -> u8 {
+        self.shard_id
+    }
+}
