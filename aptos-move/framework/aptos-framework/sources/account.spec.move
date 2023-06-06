@@ -152,7 +152,7 @@ spec aptos_framework::account {
             scheme: to_scheme,
             public_key_bytes: to_public_key_bytes,
             signature: cap_update_table,
-            challenge: challenge,
+            challenge,
         };
 
         // let new_auth_key = spec_assert_valid_rotation_proof_signature_and_get_auth_key(to_scheme, to_public_key_bytes, cap_update_table, challenge);
@@ -307,6 +307,16 @@ spec aptos_framework::account {
         aborts_if !exists<Account>(account_addr);
         let account_resource = global<Account>(account_addr);
         aborts_if len(account_resource.signer_capability_offer.for.vec) == 0;
+    }
+
+    spec is_rotation_capability_offered(account_addr: address): bool {
+        aborts_if !exists<Account>(account_addr);
+    }
+
+    spec get_rotation_capability_offer_for(account_addr: address): address {
+        aborts_if !exists<Account>(account_addr);
+        let account_resource = global<Account>(account_addr);
+        aborts_if len(account_resource.rotation_capability_offer.for.vec) == 0;
     }
 
     /// The Account existed under the signer.
