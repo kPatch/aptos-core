@@ -56,18 +56,18 @@ and implement the governance voting logic on top.
 -  [Struct `TransactionExecutionFailedEvent`](#0x1_multisig_account_TransactionExecutionFailedEvent)
 -  [Struct `MetadataUpdatedEvent`](#0x1_multisig_account_MetadataUpdatedEvent)
 -  [Constants](#@Constants_0)
--  [Function `metadata`](#0x1_multisig_account_metadata)
--  [Function `num_signatures_required`](#0x1_multisig_account_num_signatures_required)
--  [Function `owners`](#0x1_multisig_account_owners)
--  [Function `get_transaction`](#0x1_multisig_account_get_transaction)
--  [Function `get_pending_transactions`](#0x1_multisig_account_get_pending_transactions)
--  [Function `get_next_transaction_payload`](#0x1_multisig_account_get_next_transaction_payload)
--  [Function `can_be_executed`](#0x1_multisig_account_can_be_executed)
--  [Function `can_be_rejected`](#0x1_multisig_account_can_be_rejected)
--  [Function `get_next_multisig_account_address`](#0x1_multisig_account_get_next_multisig_account_address)
--  [Function `last_resolved_sequence_number`](#0x1_multisig_account_last_resolved_sequence_number)
--  [Function `next_sequence_number`](#0x1_multisig_account_next_sequence_number)
--  [Function `vote`](#0x1_multisig_account_vote)
+-  [`#[view]`<br>Function `metadata`](#0x1_multisig_account_metadata)
+-  [`#[view]`<br>Function `num_signatures_required`](#0x1_multisig_account_num_signatures_required)
+-  [`#[view]`<br>Function `owners`](#0x1_multisig_account_owners)
+-  [`#[view]`<br>Function `get_transaction`](#0x1_multisig_account_get_transaction)
+-  [`#[view]`<br>Function `get_pending_transactions`](#0x1_multisig_account_get_pending_transactions)
+-  [`#[view]`<br>Function `get_next_transaction_payload`](#0x1_multisig_account_get_next_transaction_payload)
+-  [`#[view]`<br>Function `can_be_executed`](#0x1_multisig_account_can_be_executed)
+-  [`#[view]`<br>Function `can_be_rejected`](#0x1_multisig_account_can_be_rejected)
+-  [`#[view]`<br>Function `get_next_multisig_account_address`](#0x1_multisig_account_get_next_multisig_account_address)
+-  [`#[view]`<br>Function `last_resolved_sequence_number`](#0x1_multisig_account_last_resolved_sequence_number)
+-  [`#[view]`<br>Function `next_sequence_number`](#0x1_multisig_account_next_sequence_number)
+-  [`#[view]`<br>Function `vote`](#0x1_multisig_account_vote)
 -  [Function `create_with_existing_account`](#0x1_multisig_account_create_with_existing_account)
 -  [Function `create`](#0x1_multisig_account_create)
 -  [Function `create_with_owners`](#0x1_multisig_account_create_with_owners)
@@ -921,7 +921,7 @@ Transaction with specified id cannot be found.
 
 <a name="0x1_multisig_account_metadata"></a>
 
-## Function `metadata`
+## `#[view]`<br>Function `metadata`
 
 Return the multisig account's metadata.
 
@@ -946,7 +946,7 @@ Return the multisig account's metadata.
 
 <a name="0x1_multisig_account_num_signatures_required"></a>
 
-## Function `num_signatures_required`
+## `#[view]`<br>Function `num_signatures_required`
 
 Return the number of signatures required to execute or execute-reject a transaction in the provided
 multisig account.
@@ -972,7 +972,7 @@ multisig account.
 
 <a name="0x1_multisig_account_owners"></a>
 
-## Function `owners`
+## `#[view]`<br>Function `owners`
 
 Return a vector of all of the provided multisig account's owners.
 
@@ -997,7 +997,7 @@ Return a vector of all of the provided multisig account's owners.
 
 <a name="0x1_multisig_account_get_transaction"></a>
 
-## Function `get_transaction`
+## `#[view]`<br>Function `get_transaction`
 
 Return the transaction with the given transaction id.
 
@@ -1030,7 +1030,7 @@ Return the transaction with the given transaction id.
 
 <a name="0x1_multisig_account_get_pending_transactions"></a>
 
-## Function `get_pending_transactions`
+## `#[view]`<br>Function `get_pending_transactions`
 
 Return all pending transactions.
 
@@ -1063,7 +1063,7 @@ Return all pending transactions.
 
 <a name="0x1_multisig_account_get_next_transaction_payload"></a>
 
-## Function `get_next_transaction_payload`
+## `#[view]`<br>Function `get_next_transaction_payload`
 
 Return the payload for the next transaction in the queue.
 
@@ -1097,7 +1097,7 @@ Return the payload for the next transaction in the queue.
 
 <a name="0x1_multisig_account_can_be_executed"></a>
 
-## Function `can_be_executed`
+## `#[view]`<br>Function `can_be_executed`
 
 Return true if the transaction with given transaction id can be executed now.
 
@@ -1131,7 +1131,7 @@ Return true if the transaction with given transaction id can be executed now.
 
 <a name="0x1_multisig_account_can_be_rejected"></a>
 
-## Function `can_be_rejected`
+## `#[view]`<br>Function `can_be_rejected`
 
 Return true if the transaction with given transaction id can be officially rejected.
 
@@ -1165,7 +1165,7 @@ Return true if the transaction with given transaction id can be officially rejec
 
 <a name="0x1_multisig_account_get_next_multisig_account_address"></a>
 
-## Function `get_next_multisig_account_address`
+## `#[view]`<br>Function `get_next_multisig_account_address`
 
 Return the predicted address for the next multisig account if created from the given creator address.
 
@@ -1191,7 +1191,7 @@ Return the predicted address for the next multisig account if created from the g
 
 <a name="0x1_multisig_account_last_resolved_sequence_number"></a>
 
-## Function `last_resolved_sequence_number`
+## `#[view]`<br>Function `last_resolved_sequence_number`
 
 Return the id of the last transaction that was executed (successful or failed) or removed.
 
@@ -1217,7 +1217,7 @@ Return the id of the last transaction that was executed (successful or failed) o
 
 <a name="0x1_multisig_account_next_sequence_number"></a>
 
-## Function `next_sequence_number`
+## `#[view]`<br>Function `next_sequence_number`
 
 Return the id of the next transaction created.
 
@@ -1243,7 +1243,7 @@ Return the id of the next transaction created.
 
 <a name="0x1_multisig_account_vote"></a>
 
-## Function `vote`
+## `#[view]`<br>Function `vote`
 
 Return a bool tuple indicating whether an owner has voted and if so, whether they voted yes or no.
 

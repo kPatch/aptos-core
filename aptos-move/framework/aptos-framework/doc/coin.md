@@ -27,21 +27,21 @@ This module provides the foundation for typesafe Coins.
 -  [Function `merge_aggregatable_coin`](#0x1_coin_merge_aggregatable_coin)
 -  [Function `collect_into_aggregatable_coin`](#0x1_coin_collect_into_aggregatable_coin)
 -  [Function `coin_address`](#0x1_coin_coin_address)
--  [Function `balance`](#0x1_coin_balance)
--  [Function `is_coin_initialized`](#0x1_coin_is_coin_initialized)
--  [Function `is_account_registered`](#0x1_coin_is_account_registered)
--  [Function `name`](#0x1_coin_name)
--  [Function `symbol`](#0x1_coin_symbol)
--  [Function `decimals`](#0x1_coin_decimals)
--  [Function `supply`](#0x1_coin_supply)
+-  [`#[view]`<br>Function `balance`](#0x1_coin_balance)
+-  [`#[view]`<br>Function `is_coin_initialized`](#0x1_coin_is_coin_initialized)
+-  [`#[view]`<br>Function `is_account_registered`](#0x1_coin_is_account_registered)
+-  [`#[view]`<br>Function `name`](#0x1_coin_name)
+-  [`#[view]`<br>Function `symbol`](#0x1_coin_symbol)
+-  [`#[view]`<br>Function `decimals`](#0x1_coin_decimals)
+-  [`#[view]`<br>Function `supply`](#0x1_coin_supply)
 -  [Function `burn`](#0x1_coin_burn)
 -  [Function `burn_from`](#0x1_coin_burn_from)
 -  [Function `deposit`](#0x1_coin_deposit)
 -  [Function `destroy_zero`](#0x1_coin_destroy_zero)
 -  [Function `extract`](#0x1_coin_extract)
 -  [Function `extract_all`](#0x1_coin_extract_all)
--  [Function `freeze_coin_store`](#0x1_coin_freeze_coin_store)
--  [Function `unfreeze_coin_store`](#0x1_coin_unfreeze_coin_store)
+-  [`#[legacy_entry_fun]`<br>Function `freeze_coin_store`](#0x1_coin_freeze_coin_store)
+-  [`#[legacy_entry_fun]`<br>Function `unfreeze_coin_store`](#0x1_coin_unfreeze_coin_store)
 -  [Function `upgrade_supply`](#0x1_coin_upgrade_supply)
 -  [Function `initialize`](#0x1_coin_initialize)
 -  [Function `initialize_with_parallelizable_supply`](#0x1_coin_initialize_with_parallelizable_supply)
@@ -902,7 +902,7 @@ A helper function that returns the address of CoinType.
 
 <a name="0x1_coin_balance"></a>
 
-## Function `balance`
+## `#[view]`<br>Function `balance`
 
 Returns the balance of <code>owner</code> for provided <code>CoinType</code>.
 
@@ -931,7 +931,7 @@ Returns the balance of <code>owner</code> for provided <code>CoinType</code>.
 
 <a name="0x1_coin_is_coin_initialized"></a>
 
-## Function `is_coin_initialized`
+## `#[view]`<br>Function `is_coin_initialized`
 
 Returns <code><b>true</b></code> if the type <code>CoinType</code> is an initialized coin.
 
@@ -956,7 +956,7 @@ Returns <code><b>true</b></code> if the type <code>CoinType</code> is an initial
 
 <a name="0x1_coin_is_account_registered"></a>
 
-## Function `is_account_registered`
+## `#[view]`<br>Function `is_account_registered`
 
 Returns <code><b>true</b></code> if <code>account_addr</code> is registered to receive <code>CoinType</code>.
 
@@ -981,7 +981,7 @@ Returns <code><b>true</b></code> if <code>account_addr</code> is registered to r
 
 <a name="0x1_coin_name"></a>
 
-## Function `name`
+## `#[view]`<br>Function `name`
 
 Returns the name of the coin.
 
@@ -1006,7 +1006,7 @@ Returns the name of the coin.
 
 <a name="0x1_coin_symbol"></a>
 
-## Function `symbol`
+## `#[view]`<br>Function `symbol`
 
 Returns the symbol of the coin, usually a shorter version of the name.
 
@@ -1031,7 +1031,7 @@ Returns the symbol of the coin, usually a shorter version of the name.
 
 <a name="0x1_coin_decimals"></a>
 
-## Function `decimals`
+## `#[view]`<br>Function `decimals`
 
 Returns the number of decimals used to get its user representation.
 For example, if <code>decimals</code> equals <code>2</code>, a balance of <code>505</code> coins should
@@ -1058,7 +1058,7 @@ be displayed to a user as <code>5.05</code> (<code>505 / 10 ** 2</code>).
 
 <a name="0x1_coin_supply"></a>
 
-## Function `supply`
+## `#[view]`<br>Function `supply`
 
 Returns the amount of coin in existence.
 
@@ -1308,7 +1308,7 @@ Extracts the entire amount from the passed-in <code><a href="coin.md#0x1_coin">c
 
 <a name="0x1_coin_freeze_coin_store"></a>
 
-## Function `freeze_coin_store`
+## `#[legacy_entry_fun]`<br>Function `freeze_coin_store`
 
 Freeze a CoinStore to prevent transfers
 
@@ -1337,7 +1337,7 @@ Freeze a CoinStore to prevent transfers
 
 <a name="0x1_coin_unfreeze_coin_store"></a>
 
-## Function `unfreeze_coin_store`
+## `#[legacy_entry_fun]`<br>Function `unfreeze_coin_store`
 
 Unfreeze a CoinStore to allow transfers
 

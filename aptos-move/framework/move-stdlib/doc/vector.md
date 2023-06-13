@@ -16,14 +16,14 @@ the return on investment didn't seem worth it for these simple functions.
 
 
 -  [Constants](#@Constants_0)
--  [Function `empty`](#0x1_vector_empty)
--  [Function `length`](#0x1_vector_length)
--  [Function `borrow`](#0x1_vector_borrow)
--  [Function `push_back`](#0x1_vector_push_back)
--  [Function `borrow_mut`](#0x1_vector_borrow_mut)
--  [Function `pop_back`](#0x1_vector_pop_back)
--  [Function `destroy_empty`](#0x1_vector_destroy_empty)
--  [Function `swap`](#0x1_vector_swap)
+-  [`#[bytecode_instruction]`<br>Function `empty`](#0x1_vector_empty)
+-  [`#[bytecode_instruction]`<br>Function `length`](#0x1_vector_length)
+-  [`#[bytecode_instruction]`<br>Function `borrow`](#0x1_vector_borrow)
+-  [`#[bytecode_instruction]`<br>Function `push_back`](#0x1_vector_push_back)
+-  [`#[bytecode_instruction]`<br>Function `borrow_mut`](#0x1_vector_borrow_mut)
+-  [`#[bytecode_instruction]`<br>Function `pop_back`](#0x1_vector_pop_back)
+-  [`#[bytecode_instruction]`<br>Function `destroy_empty`](#0x1_vector_destroy_empty)
+-  [`#[bytecode_instruction]`<br>Function `swap`](#0x1_vector_swap)
 -  [Function `singleton`](#0x1_vector_singleton)
 -  [Function `reverse`](#0x1_vector_reverse)
 -  [Function `reverse_slice`](#0x1_vector_reverse_slice)
@@ -123,7 +123,7 @@ The length of the vectors are not equal.
 
 <a name="0x1_vector_empty"></a>
 
-## Function `empty`
+## `#[bytecode_instruction]`<br>Function `empty`
 
 Create an empty vector.
 
@@ -146,7 +146,7 @@ Create an empty vector.
 
 <a name="0x1_vector_length"></a>
 
-## Function `length`
+## `#[bytecode_instruction]`<br>Function `length`
 
 Return the length of the vector.
 
@@ -169,7 +169,7 @@ Return the length of the vector.
 
 <a name="0x1_vector_borrow"></a>
 
-## Function `borrow`
+## `#[bytecode_instruction]`<br>Function `borrow`
 
 Acquire an immutable reference to the <code>i</code>th element of the vector <code>v</code>.
 Aborts if <code>i</code> is out of bounds.
@@ -193,7 +193,7 @@ Aborts if <code>i</code> is out of bounds.
 
 <a name="0x1_vector_push_back"></a>
 
-## Function `push_back`
+## `#[bytecode_instruction]`<br>Function `push_back`
 
 Add element <code>e</code> to the end of the vector <code>v</code>.
 
@@ -216,7 +216,7 @@ Add element <code>e</code> to the end of the vector <code>v</code>.
 
 <a name="0x1_vector_borrow_mut"></a>
 
-## Function `borrow_mut`
+## `#[bytecode_instruction]`<br>Function `borrow_mut`
 
 Return a mutable reference to the <code>i</code>th element in the vector <code>v</code>.
 Aborts if <code>i</code> is out of bounds.
@@ -240,7 +240,7 @@ Aborts if <code>i</code> is out of bounds.
 
 <a name="0x1_vector_pop_back"></a>
 
-## Function `pop_back`
+## `#[bytecode_instruction]`<br>Function `pop_back`
 
 Pop an element from the end of vector <code>v</code>.
 Aborts if <code>v</code> is empty.
@@ -264,7 +264,7 @@ Aborts if <code>v</code> is empty.
 
 <a name="0x1_vector_destroy_empty"></a>
 
-## Function `destroy_empty`
+## `#[bytecode_instruction]`<br>Function `destroy_empty`
 
 Destroy the vector <code>v</code>.
 Aborts if <code>v</code> is not empty.
@@ -288,7 +288,7 @@ Aborts if <code>v</code> is not empty.
 
 <a name="0x1_vector_swap"></a>
 
-## Function `swap`
+## `#[bytecode_instruction]`<br>Function `swap`
 
 Swaps the elements at the <code>i</code>th and <code>j</code>th indices in the vector <code>v</code>.
 Aborts if <code>i</code> or <code>j</code> is out of bounds.
