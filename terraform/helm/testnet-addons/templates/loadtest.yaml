@@ -26,7 +26,7 @@ spec:
             image: {{ .Values.load_test.image.repo }}:{{ .Values.load_test.image.tag | default .Values.imageTag }}
             imagePullPolicy: {{ .Values.load_test.image.pullPolicy }}
             command:
-            - transaction-emitter
+            - aptos-transaction-emitter
             - emit-tx
             - --mint-key={{ .Values.load_test.config.mint_key }}
             - --chain-id={{ .Values.genesis.chain_id }}
@@ -34,25 +34,36 @@ spec:
             {{- $numTargets := 0 }}
             {{- $targetSuffix := "" }}
             {{- $targetGroups := list }}
-            {{- if $.Values.load_test.config.use_validators }}
+            {{- if $.Values.load_test.config.use_pfns }}
+              {{- $numTargets = $.Values.load_test.config.numFullnodeGroups }}
+              {{- $targetSuffix = "fullnode" }}
+              {{- $targetGroups = list }}
+            {{- else if $.Values.load_test.config.use_validators }}
               {{- $numTargets = $.Values.genesis.numValidators }}
               {{- $targetSuffix = "validator" }}
               {{- $targetGroups = list }}
             {{- else }}
               {{- $numTargets = $.Values.load_test.config.numFullnodeGroups }}
               {{- $targetSuffix = "fullnode" }}
-              {{- $targetGroups = $.Values.load_test.fullnodeGroups }}
+              {{- $targetGroups = $.Values.load_test.fullnode.groups }}
             {{- end }}
-            {{- range $i := until (int $numTargets) }}
-              {{- $port := 80 }}
-              {{- if $targetGroups }}
-              {{- range $group := $targetGroups }}
-              {{- $nodeName := join "-" (list $.Values.genesis.username_prefix $i $group.name "lb") }}
-            - --targets=http://{{ $nodeName }}:{{ $port }}
+            {{- if $.Values.load_test.config.use_pfns }}
+              {{- range $i := until (int $numTargets) }}
+                {{- $nodeName := join "." (list "fullnode" $.Values.service.domain ) }}
+            - --targets=https://{{ $nodeName }}
               {{- end }}
-              {{- else }}
-              {{- $nodeName := join "-" (list $.Values.genesis.username_prefix $i $targetSuffix "lb") }}
+            {{- else }}
+              {{- range $i := until (int $numTargets) }}
+                {{- $port := 80 }}
+                {{- if $targetGroups }}
+                {{- range $group := $targetGroups }}
+                {{- $nodeName := join "-" (list $.Values.genesis.username_prefix $i $group.name "lb") }}
             - --targets=http://{{ $nodeName }}:{{ $port }}
+                {{- end }}
+                {{- else }}
+                {{- $nodeName := join "-" (list $.Values.genesis.username_prefix $i $targetSuffix "lb") }}
+            - --targets=http://{{ $nodeName }}:{{ $port }}
+               {{- end }}
               {{- end }}
             {{- end }}
           {{- with .Values.load_test }}
@@ -63,7 +74,11 @@ spec:
             - --mempool-backlog={{ .config.mempool_backlog }}
             {{- end }}
             - --duration={{ .config.duration }}
+            - --delay-after-minting=300
+            - --expected-max-tns={{ .config.expected_max_tns }}
             - --txn-expiration-time-secs={{ .config.txn_expiration_time_secs }}
+            - --max-transactions-per-account={{ .config.max_transactions_per_account }}
+            - --transaction-type={{ .config.transaction_type }}
             env:
             - name: RUST_BACKTRACE
               value: "1"
